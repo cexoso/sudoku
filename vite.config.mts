@@ -12,4 +12,7 @@ export default defineConfig({
       instances: [{ browser: "chromium" }],
     },
   },
+  optimizeDeps: {
+    include: ["@testing-library/react"],
+  },
 });
