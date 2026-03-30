@@ -8,12 +8,14 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "lint": "eslint src"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^14.6.1",
@@ -22,8 +24,11 @@
     "@vitejs/plugin-react": "^4.7.0",
     "@vitest/browser": "^4.1.2",
     "@vitest/browser-playwright": "^4.1.2",
+    "eslint": "^10.1.0",
+    "eslint-plugin-unicorn": "^64.0.0",
     "playwright": "^1.51.0",
     "typescript": "^5.8.0",
+    "typescript-eslint": "^8.57.2",
     "vite": "^6.4.1",
     "vitest": "^4.1.2"
   },
