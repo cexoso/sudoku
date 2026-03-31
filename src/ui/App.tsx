@@ -1,11 +1,13 @@
 import Board from './board'
 import NumberPad from './number-pad'
-import { usePlay } from '@/core/game'
+import WinDialog from './win-dialog'
+import { usePlay, useGameState } from '@/core/game'
 
 const difficulties = ['简单', '中等', '困难'] as const
 
 export default function App() {
   const play = usePlay()
+  const { completed } = useGameState()
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center py-8 px-4">
@@ -34,6 +36,8 @@ export default function App() {
           新游戏
         </button>
       </div>
+
+      {completed && <WinDialog />}
     </div>
   )
 }

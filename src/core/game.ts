@@ -6,6 +6,51 @@ export type Board = (number | null)[]
 
 export const useBoard = define<Board>(() => Array.from({ length: 81 }, () => null))
 
+// 初始题目（不可修改的格子）
+export const usePuzzle = define<Board>(() => Array.from({ length: 81 }, () => null))
+
+// 当前选中的格子索引，null 表示未选中
+export const useSelectedIndex = define<number | null>(() => null)
+
+// 用户填入的答案（与 board 区分：board 是题目，answers 是用户输入）
+export const useAnswers = define<Board>(() => Array.from({ length: 81 }, () => null))
+
+// 检测所有冲突格子的索引集合
+export function getConflicts(board: Board, answers: Board): Set<number> {
+  // 合并题目和用户答案为当前棋盘状态
+  const current = board.map((v, i) => (v !== null ? v : answers[i]))
+  const conflicts = new Set<number>()
+
+  for (let i = 0; i < 81; i++) {
+    if (current[i] === null) continue
+    const row = Math.floor(i / 9)
+    const col = i % 9
+    const boxRow = Math.floor(row / 3) * 3
+    const boxCol = Math.floor(col / 3) * 3
+
+    for (let j = 0; j < 81; j++) {
+      if (i === j || current[j] === null || current[i] !== current[j]) continue
+      const rj = Math.floor(j / 9)
+      const cj = j % 9
+      const sameRow = rj === row
+      const sameCol = cj === col
+      const sameBox = Math.floor(rj / 3) * 3 === boxRow && Math.floor(cj / 3) * 3 === boxCol
+      if (sameRow || sameCol || sameBox) {
+        conflicts.add(i)
+        conflicts.add(j)
+      }
+    }
+  }
+  return conflicts
+}
+
+// 判断游戏是否完成（无空格且无冲突）
+export function isGameComplete(board: Board, answers: Board): boolean {
+  const current = board.map((v, i) => (v !== null ? v : answers[i]))
+  if (current.some((v) => v === null)) return false
+  return getConflicts(board, answers).size === 0
+}
+
 // Fisher-Yates shuffle
 function shuffle<T>(arr: T[], random: () => number): T[] {
   const result = [...arr]
@@ -77,10 +122,38 @@ function digHoles(board: Board, givens: number, random: () => number): Board {
 export const usePlay = () => {
   const random = useRandom()
   const [, setBoard] = useBoard()
+  const [, setPuzzle] = usePuzzle()
+  const [, setAnswers] = useAnswers()
+  const [, setSelected] = useSelectedIndex()
 
   return (givens = 30) => {
     const full = generateFullBoard(random)
     const puzzle = digHoles(full, givens, random)
     setBoard(puzzle)
+    setPuzzle(puzzle)
+    setAnswers(Array.from({ length: 81 }, () => null))
+    setSelected(null)
   }
+}
+
+export const useFillCell = () => {
+  const [puzzle] = usePuzzle()
+  const [selectedIndex] = useSelectedIndex()
+  const [answers, setAnswers] = useAnswers()
+
+  return (value: number) => {
+    if (selectedIndex === null) return
+    if (puzzle[selectedIndex] !== null) return // 初始数字不可修改
+    const next = [...answers]
+    next[selectedIndex] = value
+    setAnswers(next)
+  }
+}
+
+export const useGameState = () => {
+  const [board] = useBoard()
+  const [answers] = useAnswers()
+  const conflicts = getConflicts(board, answers)
+  const completed = isGameComplete(board, answers)
+  return { conflicts, completed }
 }
