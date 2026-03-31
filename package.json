@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "prepare": "husky"
   },
   "keywords": [],
   "author": "",
@@ -26,12 +27,13 @@
     "@vitest/browser-playwright": "^4.1.2",
     "eslint": "^10.1.0",
     "eslint-plugin-unicorn": "^64.0.0",
+    "husky": "^9.1.7",
     "playwright": "^1.51.0",
+    "prettier": "^3.4.2",
     "typescript": "^5.8.0",
     "typescript-eslint": "^8.57.2",
     "vite": "^6.4.1",
-    "vitest": "^4.1.2",
-    "prettier": "^3.4.2"
+    "vitest": "^4.1.2"
   },
   "dependencies": {
     "@cexoso/react-singleton": "^0.0.1",
