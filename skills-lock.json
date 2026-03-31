@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "skills": {
+    "best-practices": {
+      "source": "addyosmani/web-quality-skills",
+      "sourceType": "github",
+      "computedHash": "98dafea60ec1a7f5f70f6febcdd4b4fa3fe15723ad9c0b991c0818615bff7ba6"
+    }
+  }
+}
