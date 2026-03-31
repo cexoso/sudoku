@@ -16,6 +16,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@cexoso/test-utils": "^0.0.4",
     "@eslint/js": "^10.0.1",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^14.6.1",
