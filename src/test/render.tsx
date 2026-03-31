@@ -1,5 +1,5 @@
 import { Container } from '@/container'
-import App from '@/ui/app'
+import App from '@/ui/app-entry'
 import { render as reactRender, cleanup, act } from '@testing-library/react'
 import { ReactNode, useEffect, useRef, useState } from 'react'
 import { Subject } from 'rxjs'
@@ -42,11 +42,7 @@ function PlayContainer(props: {
     return () => sub.unsubscribe()
   }, [props.taskSubject])
 
-  const content = props.init ? (
-    <InitRunner init={props.init}>{props.children}</InitRunner>
-  ) : (
-    props.children
-  )
+  const content = props.init ? <InitRunner init={props.init}>{props.children}</InitRunner> : props.children
 
   return (
     <>
@@ -72,7 +68,7 @@ function destroyIfNeed() {
 
 export function render(
   maybeComponent?: ReactRenderArgs[0],
-  options?: { init?: () => void } & ReactRenderArgs[1],
+  options?: { init?: () => void } & ReactRenderArgs[1]
 ) {
   destroyIfNeed()
   const { init, ...restOptions } = options ?? {}
@@ -87,14 +83,14 @@ export function render(
         {Component}
       </PlayContainer>
     </Container>,
-    { ...restOptions, container: dom },
+    { ...restOptions, container: dom }
   )
 
   function play(cb: () => void): Promise<void> {
     return new Promise((resolve) =>
       act(() => {
         subject.next({ taskSetup: cb, onTaskDone: resolve })
-      }),
+      })
     )
   }
 

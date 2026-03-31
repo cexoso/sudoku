@@ -1,13 +1,21 @@
 import Board from './sudoku-board'
 import NumberPad from './number-pad'
 import WinDialog from './win-dialog'
-import { usePlay, useGameState } from '@/core/game'
+import { usePlay, useGameState, useIsStarted } from '@/core/game'
+import { useEffect } from 'react'
 
 const difficulties = ['简单', '中等', '困难'] as const
 
 export default function App() {
   const play = usePlay()
   const { completed } = useGameState()
+  const isStarted = useIsStarted()
+
+  useEffect(() => {
+    if (!isStarted) {
+      play()
+    }
+  }, [])
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center py-8 px-4">

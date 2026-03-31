@@ -39,5 +39,12 @@ describe('数独游戏', () => {
       render()
       expect(screen.getByRole('button', { name: '新游戏' })).toBeDefined()
     })
+
+    it('页面加载后棋盘应该自动开始一局，显示初始数字', () => {
+      render()
+      const cells = screen.getAllByRole('gridcell')
+      const filledCells = cells.filter((cell) => cell.textContent !== '')
+      expect(filledCells.length).toBeGreaterThan(0)
+    })
   })
 })

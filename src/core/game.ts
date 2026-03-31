@@ -108,7 +108,7 @@ function digHoles(board: Board, givens: number, random: () => number): Board {
   const result = [...board]
   const indices = shuffle(
     Array.from({ length: 81 }, (_, i) => i),
-    random,
+    random
   )
   let kept = 81
   for (const idx of indices) {
@@ -148,6 +148,11 @@ export const useFillCell = () => {
     next[selectedIndex] = value
     setAnswers(next)
   }
+}
+
+export const useIsStarted = () => {
+  const [board] = useBoard()
+  return board.some((v) => v !== null)
 }
 
 export const useGameState = () => {
