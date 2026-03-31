@@ -16,13 +16,9 @@ export default function Board() {
         const row = Math.floor(index / 9)
         const col = index % 9
         const borderRight =
-          (col + 1) % 3 === 0 && col !== 8
-            ? 'border-r-2 border-r-gray-800'
-            : 'border-r border-r-gray-300'
+          (col + 1) % 3 === 0 && col !== 8 ? 'border-r-2 border-r-gray-800' : 'border-r border-r-gray-300'
         const borderBottom =
-          (row + 1) % 3 === 0 && row !== 8
-            ? 'border-b-2 border-b-gray-800'
-            : 'border-b border-b-gray-300'
+          (row + 1) % 3 === 0 && row !== 8 ? 'border-b-2 border-b-gray-800' : 'border-b border-b-gray-300'
 
         const isSelected = selectedIndex === index
         const isConflict = conflicts.has(index)
