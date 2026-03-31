@@ -1,5 +1,5 @@
-import Board from './Board'
-import NumberPad from './NumberPad'
+import Board from './board'
+import NumberPad from './number-pad'
 
 export default function App() {
   return (

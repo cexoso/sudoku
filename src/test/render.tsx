@@ -1,5 +1,5 @@
 import { Container } from '@/container'
-import App from '@/ui/App'
+import App from '@/ui/app'
 import { render as reactRender, cleanup } from '@testing-library/react'
 
 type ReactRenderArgs = Parameters<typeof reactRender>
