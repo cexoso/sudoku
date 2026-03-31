@@ -27,5 +27,17 @@ describe('数独游戏', () => {
         expect(screen.getByRole('button', { name: String(i) })).toBeDefined()
       }
     })
+
+    it('应该显示难度选择按钮', () => {
+      render()
+      expect(screen.getByRole('button', { name: '简单' })).toBeDefined()
+      expect(screen.getByRole('button', { name: '中等' })).toBeDefined()
+      expect(screen.getByRole('button', { name: '困难' })).toBeDefined()
+    })
+
+    it('应该显示新游戏按钮', () => {
+      render()
+      expect(screen.getByRole('button', { name: '新游戏' })).toBeDefined()
+    })
   })
 })

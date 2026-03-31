@@ -1,9 +1,9 @@
-import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './ui/app'
+import { Container } from './container'
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
+  <Container>
     <App />
-  </StrictMode>
+  </Container>
 )

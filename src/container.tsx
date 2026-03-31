@@ -1,3 +1,4 @@
+import './index.css'
 import { ReactNode, StrictMode } from 'react'
 export const Container: React.FC<{
   children?: ReactNode | undefined
