@@ -18,7 +18,7 @@ export const difficulties = [
   {
     level: 2,
     label: '困难',
-    value: 20,
+    value: 15,
   },
 ]
 
@@ -145,10 +145,11 @@ export const usePlay = () => {
   const [, setPuzzle] = usePuzzle()
   const [, setAnswers] = useAnswers()
   const [, setSelected] = useSelectedIndex()
-  const [initialCount] = useInitialCount()
-  return () => {
+  const [initCount, setInitCount] = useInitialCount()
+  return (givens: number = initCount) => {
+    setInitCount(givens)
     const full = generateFullBoard(random)
-    const puzzle = digHoles(full, initialCount, random)
+    const puzzle = digHoles(full, givens, random)
     setBoard(puzzle)
     setPuzzle(puzzle)
     setAnswers(Array.from({ length: 81 }, () => null))

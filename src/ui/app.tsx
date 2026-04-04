@@ -8,7 +8,7 @@ export default function App() {
   const play = usePlay()
   const { completed } = useGameState()
   const isStarted = useIsStarted()
-  const [count, setCount] = useInitialCount()
+  const [count] = useInitialCount()
 
   useEffect(() => {
     if (!isStarted) {
@@ -22,8 +22,7 @@ export default function App() {
         {difficulties.map((d) => (
           <button
             onClick={() => {
-              setCount(d.value)
-              play()
+              play(d.value)
             }}
             key={d.value}
             style={{
