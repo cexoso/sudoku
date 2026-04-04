@@ -162,11 +162,11 @@ export const useFillCell = () => {
   const [selectedIndex] = useSelectedIndex()
   const [answers, setAnswers] = useAnswers()
 
-  return (value: number) => {
+  return (value: number | '') => {
     if (selectedIndex === null) return false
     if (puzzle[selectedIndex] !== null) return false // 初始数字不可修改
     const next = [...answers]
-    next[selectedIndex] = value
+    next[selectedIndex] = value === '' ? null : value
     setAnswers(next)
     return true
   }

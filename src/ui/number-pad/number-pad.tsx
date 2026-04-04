@@ -2,6 +2,7 @@ import { useFillCell } from '@/core/game'
 import { useEffect, useRef } from 'react'
 import click from './click.mp3'
 
+const numberBar = ['', 1, 2, 3, 4, 5, 6, 7, 8, 9] as const
 export default function NumberPad() {
   const fillCell = useFillCell()
   const clickSoundRef = useRef<HTMLAudioElement | null>(null)
@@ -12,7 +13,7 @@ export default function NumberPad() {
   }, [])
 
   // 点击：震动 + 声音 + 填数字
-  const handleTrigger = (n: number) => {
+  const handleTrigger = (n: number | '') => {
     const result = fillCell(n)
     if (!result) {
       // 这里可以添加错误的声音
@@ -33,7 +34,7 @@ export default function NumberPad() {
   return (
     <div className="mt-5 px-2">
       <div className="flex flex-wrap justify-center gap-2 max-w-[440px] mx-auto">
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => (
+        {numberBar.map((n) => (
           <button
             key={n}
             onTouchEnd={(e) => {
