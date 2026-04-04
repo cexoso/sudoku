@@ -41,15 +41,6 @@ export default function App() {
 
       <NumberPad />
 
-      <div className="mt-6">
-        <button
-          onClick={() => play()}
-          className="px-8 py-2.5 rounded-xl bg-blue-500 text-white font-semibold hover:bg-blue-600 active:bg-blue-700 transition-colors shadow-sm"
-        >
-          新游戏
-        </button>
-      </div>
-
       {completed && <WinDialog />}
     </div>
   )
