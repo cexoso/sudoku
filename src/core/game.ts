@@ -4,6 +4,26 @@ import { useRandom } from './random'
 // 81 个格子，null 表示空格
 export type Board = (number | null)[]
 
+export const difficulties = [
+  {
+    level: 0,
+    label: '简单',
+    value: 50,
+  },
+  {
+    level: 1,
+    label: '普通',
+    value: 30,
+  },
+  {
+    level: 2,
+    label: '困难',
+    value: 20,
+  },
+]
+
+export const useInitialCount = define(() => difficulties.find((item) => item.level === 1)!.value)
+
 export const useBoard = define<Board>(() => Array.from({ length: 81 }, () => null))
 
 // 初始题目（不可修改的格子）
@@ -125,10 +145,10 @@ export const usePlay = () => {
   const [, setPuzzle] = usePuzzle()
   const [, setAnswers] = useAnswers()
   const [, setSelected] = useSelectedIndex()
-
-  return (givens = 30) => {
+  const [initialCount] = useInitialCount()
+  return () => {
     const full = generateFullBoard(random)
-    const puzzle = digHoles(full, givens, random)
+    const puzzle = digHoles(full, initialCount, random)
     setBoard(puzzle)
     setPuzzle(puzzle)
     setAnswers(Array.from({ length: 81 }, () => null))
