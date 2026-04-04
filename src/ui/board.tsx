@@ -53,13 +53,19 @@ export default function Board() {
           // 文字颜色
           let textClass = 'text-gray-800 font-semibold'
           if (!isFixed && displayValue != null) textClass = 'text-blue-600'
-
+          function handleClick() {
+            !isFixed && setSelectedIndex(index)
+          }
           return (
             <div
               key={index}
               role="gridcell"
               aria-invalid={isConflict}
-              onClick={() => !isFixed && setSelectedIndex(index)}
+              onTouchEnd={(e) => {
+                e.preventDefault()
+                handleClick()
+              }}
+              onClick={() => handleClick()}
               className={`
                 w-[40px] h-[40px]
                 flex items-center justify-center
