@@ -1,4 +1,5 @@
 import { useBoard, useSelectedIndex, useAnswers, useGameState } from '@/core/game'
+import { useEffect, useState } from 'react'
 
 export default function Board() {
   const [board] = useBoard()
@@ -6,15 +7,25 @@ export default function Board() {
   const [selectedIndex, setSelectedIndex] = useSelectedIndex()
   const { conflicts } = useGameState()
 
+  // 动画状态：记录正在播放动画的格子索引
+  const [animatingIndex, setAnimatingIndex] = useState<number | null>(null)
+
+  // 监听 answers 变化 → 播放填入动画
+  useEffect(() => {
+    if (selectedIndex !== null) {
+      setAnimatingIndex(selectedIndex)
+      // 动画结束后重置
+      setTimeout(() => setAnimatingIndex(null), 600)
+    }
+  }, [answers, selectedIndex])
+
   return (
     <div className="w-full px-2 mt-2 flex justify-center">
-      {/* 外层容器：控制整体大小 + 正确9宫格 */}
       <div
         role="grid"
         aria-label="数独棋盘"
         className="grid grid-cols-9 border-2 border-gray-800 bg-white"
         style={{
-          // 基础大小 + 小屏自动缩
           width: 'min(90vw, 360px)',
           aspectRatio: '1 / 1',
         }}
@@ -23,7 +34,6 @@ export default function Board() {
           const row = Math.floor(index / 9)
           const col = index % 9
 
-          // 正确3×3粗线（只在宫边界加粗）
           const isRightBold = (col + 1) % 3 === 0 && col < 8
           const isBottomBold = (row + 1) % 3 === 0 && row < 8
 
@@ -32,12 +42,15 @@ export default function Board() {
           const isFixed = puzzleValue !== null
           const displayValue = puzzleValue ?? answers[index]
 
+          // 是否正在播放填入动画
+          const isAnimating = animatingIndex === index && displayValue !== null
+
           // 背景
           let bgClass = 'hover:bg-blue-50'
           if (isConflict) bgClass = 'bg-red-100'
           else if (isSelected) bgClass = 'bg-blue-200'
 
-          // 文字颜色：题目黑色 / 填写蓝色
+          // 文字颜色
           let textClass = 'text-gray-800 font-semibold'
           if (!isFixed && displayValue != null) textClass = 'text-blue-600'
 
@@ -54,6 +67,10 @@ export default function Board() {
                 ${bgClass} ${textClass}
                 ${isRightBold ? 'border-r-2 border-r-gray-800' : 'border-r border-r-gray-300'}
                 ${isBottomBold ? 'border-b-2 border-b-gray-800' : 'border-b border-b-gray-300'}
+
+                /* 填入动画核心 */
+                transition-all duration-300
+                ${isAnimating ? 'animate-fill-cell' : ''}
               `}
             >
               {displayValue ?? ''}
