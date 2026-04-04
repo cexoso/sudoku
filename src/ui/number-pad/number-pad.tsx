@@ -13,6 +13,11 @@ export default function NumberPad() {
 
   // 点击：震动 + 声音 + 填数字
   const handleClick = (n: number) => {
+    const result = fillCell(n)
+    if (!result) {
+      // 这里可以添加错误的声音
+      return
+    }
     // 1. 振动（Web Vibrate API，10ms 短震）
     if (navigator.vibrate) {
       navigator.vibrate(10)
@@ -23,9 +28,6 @@ export default function NumberPad() {
       clickSoundRef.current.currentTime = 0
       clickSoundRef.current.play().catch(() => {})
     }
-
-    // 3. 真正填数
-    fillCell(n)
   }
 
   return (
