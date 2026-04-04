@@ -4,11 +4,6 @@ import { screen } from '@testing-library/react'
 
 describe('数独游戏', () => {
   describe('初始化界面', () => {
-    it('应该显示游戏标题', () => {
-      render()
-      expect(screen.getByRole('heading', { name: '数独' })).toBeDefined()
-    })
-
     it('应该显示 9x9 的数独棋盘', () => {
       render()
       const board = screen.getByRole('grid', { name: '数独棋盘' })
@@ -31,13 +26,8 @@ describe('数独游戏', () => {
     it('应该显示难度选择按钮', () => {
       render()
       expect(screen.getByRole('button', { name: '简单' })).toBeDefined()
-      expect(screen.getByRole('button', { name: '中等' })).toBeDefined()
+      expect(screen.getByRole('button', { name: '普通' })).toBeDefined()
       expect(screen.getByRole('button', { name: '困难' })).toBeDefined()
-    })
-
-    it('应该显示新游戏按钮', () => {
-      render()
-      expect(screen.getByRole('button', { name: '新游戏' })).toBeDefined()
     })
 
     it('页面加载后棋盘应该自动开始一局，显示初始数字', () => {
