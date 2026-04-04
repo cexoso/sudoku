@@ -12,7 +12,7 @@ export default function NumberPad() {
   }, [])
 
   // 点击：震动 + 声音 + 填数字
-  const handleClick = (n: number) => {
+  const handleTrigger = (n: number) => {
     const result = fillCell(n)
     if (!result) {
       // 这里可以添加错误的声音
@@ -36,7 +36,12 @@ export default function NumberPad() {
         {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => (
           <button
             key={n}
-            onClick={() => handleClick(n)}
+            onTouchEnd={(e) => {
+              e.preventDefault() // 禁止浏览器默认行为
+              handleTrigger(n)
+            }}
+            // 保留 click 兼容桌面端
+            onClick={() => handleTrigger(n)}
             className="
               w-[40px] h-[40px]
               rounded-lg
