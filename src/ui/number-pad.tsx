@@ -5,11 +5,13 @@ export default function NumberPad() {
 
   return (
     <div className="mt-4 px-2">
-      {/* 大屏：一行；小屏（≤375px）：分两行网格 */}
+      {/* 核心：大屏一行9个，小屏两行，按钮大小自适应，间距均匀 */}
       <div
         className="
-        grid grid-cols-9 gap-2 justify-center max-w-[320px] mx-auto
+        grid grid-cols-9 gap-3 justify-center
+        max-w-[min(90vw, 400px)] mx-auto
         [@media(max-width:375px)]:grid-cols-5
+        [@media(max-width:375px)]:gap-2
       "
       >
         {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => (
@@ -17,9 +19,12 @@ export default function NumberPad() {
             key={n}
             onClick={() => fillCell(n)}
             className="
-              w-[30px] h-[34px] sm:w-12 sm:h-12
-              rounded-lg border-2 border-gray-300 bg-white text-base font-semibold text-gray-700
-              hover:bg-blue-100 hover:border-blue-400 active:bg-blue-200 transition-colors
+              aspect-square w-full rounded-lg
+              border-2 border-gray-300 bg-white
+              text-[clamp(1rem,3vw,1.25rem)] font-semibold text-gray-700
+              hover:bg-blue-100 hover:border-blue-400
+              active:bg-blue-200 transition-colors
+              shadow-sm
             "
           >
             {n}
