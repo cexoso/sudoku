@@ -61,6 +61,7 @@ export default function Board() {
               aria-invalid={isConflict}
               onClick={() => !isFixed && setSelectedIndex(index)}
               className={`
+                w-[40px] h-[40px]
                 flex items-center justify-center
                 text-[clamp(1rem,4vw,1.25rem)]
                 cursor-pointer select-none
