@@ -1,4 +1,4 @@
-import Board from './sudoku-board'
+import Board from './board'
 import NumberPad from './number-pad'
 import WinDialog from './win-dialog'
 import { usePlay, useGameState, useIsStarted, useInitialCount, difficulties } from '@/core/game'
