@@ -1,0 +1,10 @@
+import { Canvas, Meta, Story, Controls } from '@storybook/addon-docs/blocks';
+
+import * as SudokuAppStories from './app.stories.tsx';
+
+<Meta of={SudokuAppStories} />
+
+# 游戏介绍
+数独游戏, 可以通过点击上方的按钮，以对应的难度开启一局新的游戏
+
+<Canvas inline of={SudokuAppStories.normal} story={{ autoplay: true }} />
