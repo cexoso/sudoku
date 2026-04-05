@@ -1,14 +1,15 @@
-/// <reference types="vitest/config" />
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import { playwright } from '@vitest/browser-playwright'
 import { VitePWA } from 'vite-plugin-pwa'
 import { fileURLToPath } from 'node:url'
-import { dirname, resolve } from 'node:path'
+import { resolve } from 'node:path'
+import path from 'node:path'
+import { storybookTest } from '@storybook/addon-vitest/vitest-plugin'
 
-const __dirname = dirname(fileURLToPath(import.meta.url))
-
+// More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 export default defineConfig({
   plugins: [
     react(),
@@ -53,14 +54,48 @@ export default defineConfig({
       '@': resolve(__dirname, './src'),
     },
   },
-  test: {
-    browser: {
-      enabled: true,
-      provider: playwright(),
-      instances: [{ browser: 'chromium' }],
-    },
-  },
   optimizeDeps: {
     include: ['@testing-library/react'],
+  },
+  test: {
+    projects: [
+      {
+        extends: true,
+        test: {
+          browser: {
+            enabled: true,
+            provider: playwright(),
+            instances: [
+              {
+                browser: 'chromium',
+              },
+            ],
+          },
+        },
+      },
+      {
+        extends: true,
+        plugins: [
+          // The plugin will run tests for the stories defined in your Storybook config
+          // See options at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon#storybooktest
+          storybookTest({
+            configDir: path.join(__dirname, '.storybook'),
+          }),
+        ],
+        test: {
+          name: 'storybook',
+          browser: {
+            enabled: true,
+            headless: true,
+            provider: playwright({}),
+            instances: [
+              {
+                browser: 'chromium',
+              },
+            ],
+          },
+        },
+      },
+    ],
   },
 })

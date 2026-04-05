@@ -10,7 +10,9 @@
     "test": "vitest run --browser.headless",
     "test:watch": "vitest",
     "lint": "eslint src",
-    "prepare": "husky"
+    "prepare": "husky",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "keywords": [],
   "author": "",
@@ -36,7 +38,15 @@
     "typescript-eslint": "^8.57.2",
     "vite": "^6.4.1",
     "vite-plugin-pwa": "^1.2.0",
-    "vitest": "^4.1.2"
+    "vitest": "^4.1.2",
+    "storybook": "^10.3.4",
+    "@storybook/react-vite": "^10.3.4",
+    "@chromatic-com/storybook": "^5.1.1",
+    "@storybook/addon-vitest": "^10.3.4",
+    "@storybook/addon-a11y": "^10.3.4",
+    "@storybook/addon-docs": "^10.3.4",
+    "eslint-plugin-storybook": "^10.3.4",
+    "@vitest/coverage-v8": "4.1.2"
   },
   "dependencies": {
     "@cexoso/react-singleton": "^0.0.1",

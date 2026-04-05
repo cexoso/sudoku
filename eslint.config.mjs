@@ -1,17 +1,15 @@
+// For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
+import storybook from "eslint-plugin-storybook";
+
 import js from '@eslint/js'
 import tseslint from 'typescript-eslint'
 import unicorn from 'eslint-plugin-unicorn'
 
-export default tseslint.config(
-  js.configs.recommended,
-  ...tseslint.configs.recommended,
-  {
-    plugins: { unicorn },
-    rules: {
-      'unicorn/filename-case': ['error', { case: 'kebabCase' }],
-    },
+export default tseslint.config(js.configs.recommended, ...tseslint.configs.recommended, {
+  plugins: { unicorn },
+  rules: {
+    'unicorn/filename-case': ['error', { case: 'kebabCase' }],
   },
-  {
-    ignores: ['node_modules/**', 'dist/**'],
-  }
-)
+}, {
+  ignores: ['node_modules/**', 'dist/**'],
+}, storybook.configs["flat/recommended"]);
