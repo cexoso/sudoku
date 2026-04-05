@@ -1,7 +1,14 @@
 import Board from './board'
 import NumberPad from './number-pad'
 import WinDialog from './win-dialog'
-import { usePlay, useGameState, useIsStarted, useInitialCount, difficulties } from '@/core/game'
+import {
+  usePlay,
+  useGameState,
+  useIsStarted,
+  useInitialCount,
+  difficulties,
+  useLoadFromStorage,
+} from '@/core/game'
 import { useEffect } from 'react'
 
 export default function App() {
@@ -9,10 +16,14 @@ export default function App() {
   const { completed } = useGameState()
   const isStarted = useIsStarted()
   const [count] = useInitialCount()
+  const loadFromStorage = useLoadFromStorage()
 
   useEffect(() => {
     if (!isStarted) {
-      play()
+      const isSuccess = loadFromStorage() // 优先从本地存储恢复
+      if (!isSuccess) {
+        play() // 如果本地存储没有，再直接随机一把新的
+      }
     }
   }, [])
 

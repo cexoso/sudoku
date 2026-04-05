@@ -1,6 +1,6 @@
 import { define } from '@cexoso/react-singleton'
 import { useRandom } from './random'
-import { Board, useAnswers, useBoard, useSetAnswers, useSetBoard } from './state'
+import { Board, useAnswers, useBoard, useGetItem, useSetAnswers, useSetBoard } from './state'
 
 export const difficulties = [
   {
@@ -142,6 +142,19 @@ export const usePlay = () => {
     setBoard(puzzle)
     setAnswers(Array.from({ length: 81 }, () => null))
     setSelected(null)
+  }
+}
+
+export const useLoadFromStorage = () => {
+  const getItem = useGetItem()
+  const setBoard = useSetBoard()
+  const setAnswers = useSetAnswers()
+  return () => {
+    const board = getItem<Board>('board')
+    const answers = getItem<Board>('answers')
+    board !== null && setBoard(board)
+    answers !== null && setAnswers(answers)
+    return board !== null || answers !== null
   }
 }
 

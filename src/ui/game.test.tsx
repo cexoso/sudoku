@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest'
 import { render } from '../test/render'
 import { screen } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
-import { useRandomHumbleObject } from '@/core/random'
+import { useRandomHumbleObject, useStorageHumbleObject } from '@/core/random'
 import { getOrCreateStub } from '@cexoso/test-utils'
 import { useSetBoard } from '@/core/state'
 
@@ -91,12 +91,24 @@ describe('新游戏', () => {
   })
 
   it('不同随机种子产生不同的棋盘', async () => {
-    render(undefined, { init: mockRandom(0.1) })
+    const init = (key: number) => {
+      const storage = useStorageHumbleObject()[0]
+      getOrCreateStub(storage, 'getItem').resolves(null)
+      getOrCreateStub(storage, 'setItem')
+      mockRandom(key)()
+    }
+    render(undefined, {
+      init: () => init(0.1),
+    })
     const cells1 = screen.getAllByRole('gridcell').map((c) => c.textContent)
 
-    render(undefined, { init: mockRandom(0.9) })
+    render(undefined, {
+      init: () => init(0.9),
+    })
     const cells2 = screen.getAllByRole('gridcell').map((c) => c.textContent)
 
     expect(cells1).not.toEqual(cells2)
   })
+
+  it.todo('应该有一个用例来描述持久化，打开页面前总是尝试恢复上一局游戏', async () => {})
 })
