@@ -1,9 +1,10 @@
-import { useBoard, useSelectedIndex, useAnswers, useGameState } from '@/core/game'
+import { useSelectedIndex, useGameState } from '@/core/game'
+import { useAnswers, useBoard } from '@/core/state'
 import { useEffect, useState } from 'react'
 
 export default function Board() {
-  const [board] = useBoard()
-  const [answers] = useAnswers()
+  const board = useBoard()
+  const answers = useAnswers()
   const [selectedIndex, setSelectedIndex] = useSelectedIndex()
   const { conflicts } = useGameState()
 

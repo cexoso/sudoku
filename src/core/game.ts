@@ -1,8 +1,6 @@
 import { define } from '@cexoso/react-singleton'
 import { useRandom } from './random'
-
-// 81 个格子，null 表示空格
-export type Board = (number | null)[]
+import { Board, useAnswers, useBoard, useSetAnswers, useSetBoard } from './state'
 
 export const difficulties = [
   {
@@ -24,16 +22,8 @@ export const difficulties = [
 
 export const useInitialCount = define(() => difficulties.find((item) => item.level === 1)!.value)
 
-export const useBoard = define<Board>(() => Array.from({ length: 81 }, () => null))
-
-// 初始题目（不可修改的格子）
-export const usePuzzle = define<Board>(() => Array.from({ length: 81 }, () => null))
-
 // 当前选中的格子索引，null 表示未选中
 export const useSelectedIndex = define<number | null>(() => null)
-
-// 用户填入的答案（与 board 区分：board 是题目，answers 是用户输入）
-export const useAnswers = define<Board>(() => Array.from({ length: 81 }, () => null))
 
 // 检测所有冲突格子的索引集合
 export function getConflicts(board: Board, answers: Board): Set<number> {
@@ -141,9 +131,8 @@ function digHoles(board: Board, givens: number, random: () => number): Board {
 
 export const usePlay = () => {
   const random = useRandom()
-  const [, setBoard] = useBoard()
-  const [, setPuzzle] = usePuzzle()
-  const [, setAnswers] = useAnswers()
+  const setBoard = useSetBoard()
+  const setAnswers = useSetAnswers()
   const [, setSelected] = useSelectedIndex()
   const [initCount, setInitCount] = useInitialCount()
   return (givens: number = initCount) => {
@@ -151,35 +140,34 @@ export const usePlay = () => {
     const full = generateFullBoard(random)
     const puzzle = digHoles(full, givens, random)
     setBoard(puzzle)
-    setPuzzle(puzzle)
     setAnswers(Array.from({ length: 81 }, () => null))
     setSelected(null)
   }
 }
 
 export const useFillCell = () => {
-  const [puzzle] = usePuzzle()
   const [selectedIndex] = useSelectedIndex()
-  const [answers, setAnswers] = useAnswers()
+  const setAnswers = useSetAnswers()
 
   return (value: number | '') => {
     if (selectedIndex === null) return false
-    if (puzzle[selectedIndex] !== null) return false // 初始数字不可修改
-    const next = [...answers]
-    next[selectedIndex] = value === '' ? null : value
-    setAnswers(next)
+    setAnswers((answers) => {
+      const next = [...answers]
+      next[selectedIndex] = value === '' ? null : value
+      return next
+    })
     return true
   }
 }
 
 export const useIsStarted = () => {
-  const [board] = useBoard()
+  const board = useBoard()
   return board.some((v) => v !== null)
 }
 
 export const useGameState = () => {
-  const [board] = useBoard()
-  const [answers] = useAnswers()
+  const board = useBoard()
+  const answers = useAnswers()
   const conflicts = getConflicts(board, answers)
   const completed = isGameComplete(board, answers)
   return { conflicts, completed }

@@ -4,7 +4,7 @@ import { screen } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
 import { useRandomHumbleObject } from '@/core/random'
 import { getOrCreateStub } from '@cexoso/test-utils'
-import { useBoard, usePuzzle } from '@/core/game'
+import { useSetBoard } from '@/core/state'
 
 // 一个合法的完整数独棋盘
 // prettier-ignore
@@ -26,10 +26,8 @@ const FULL_BOARD = [
 const ALMOST_COMPLETE = FULL_BOARD.map((v, i) => (i === 80 ? null : v)) as (number | null)[]
 
 function loadFixedBoard() {
-  const [, setBoard] = useBoard()
-  const [, setPuzzle] = usePuzzle()
+  const setBoard = useSetBoard()
   setBoard(ALMOST_COMPLETE)
-  setPuzzle(ALMOST_COMPLETE)
 }
 
 function mockRandom(value: number) {
