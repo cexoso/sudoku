@@ -28,7 +28,7 @@ export default function App() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col items-center py-8 px-4">
+    <div style={{ minWidth: 375 }} className="min-h-screen bg-gray-50 flex flex-col items-center py-8 px-4">
       <div className="flex gap-2 mb-6">
         {difficulties.map((d) => (
           <button
