@@ -1,5 +1,5 @@
 import { Container } from '@/container'
-import App from '@/ui/app-entry'
+import App from '@/ui/app'
 import { render as reactRender, cleanup, act } from '@testing-library/react'
 import { ReactNode, useEffect, useRef, useState } from 'react'
 import { Subject } from 'rxjs'

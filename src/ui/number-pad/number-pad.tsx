@@ -7,7 +7,7 @@ export default function NumberPad() {
 
   // 点击：震动 + 声音 + 填数字
   const handleTrigger = async (n: number | '') => {
-    await play()
+    play()
     fillCell(n)
   }
 
