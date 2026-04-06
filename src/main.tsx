@@ -1,6 +1,7 @@
 import { createRoot } from 'react-dom/client'
 import App from './ui/app'
 import { Container } from './container'
+import './utils/report'
 
 document.body.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false })
 document.body.style.cssText = `
