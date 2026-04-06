@@ -23,6 +23,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # 关键修复：启用 Corepack（Node.js >=16.13 内置，无需额外安装）
+      - name: Enable Corepack
+        run: corepack enable
+
+
       # 2. 设置 Node.js 环境（请根据你的项目实际 Node 版本调整，比如 18.x/20.x）
       - name: Setup Node.js
         uses: actions/setup-node@v4
