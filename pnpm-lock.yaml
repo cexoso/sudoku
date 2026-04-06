@@ -11,6 +11,9 @@ importers:
       '@cexoso/react-singleton':
         specifier: ^0.0.1
         version: 0.0.1
+      '@microsoft/clarity':
+        specifier: ^1.0.2
+        version: 1.0.2
       '@tailwindcss/vite':
         specifier: ^4.2.2
         version: 4.2.2(vite@6.4.1(@types/node@25.5.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.1)(yaml@2.8.3))
@@ -900,6 +903,9 @@ packages:
     peerDependencies:
       '@types/react': '>=16'
       react: '>=16'
+
+  '@microsoft/clarity@1.0.2':
+    resolution: {integrity: sha512-9EZYROFpJxEGmQpHvUFqvD3ZJ7QQSqnibYSWmS+1xusoZfG1QQ1/Al9yVBBc11DWMbJrs1pe1hLT273it/skJg==}
 
   '@neoconfetti/react@1.0.0':
     resolution: {integrity: sha512-klcSooChXXOzIm+SE5IISIAn3bYzYfPjbX7D7HoqZL84oAfgREeSg5vSIaSFH+DaGzzvImTyWe1OyrJ67vik4A==}
@@ -4182,6 +4188,8 @@ snapshots:
       '@types/mdx': 2.0.13
       '@types/react': 19.2.14
       react: 19.2.4
+
+  '@microsoft/clarity@1.0.2': {}
 
   '@neoconfetti/react@1.0.0': {}
 
